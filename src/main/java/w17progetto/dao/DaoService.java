@@ -96,13 +96,21 @@ public class DaoService implements IDao {
 		if ((postazione.getPrenotazione() == null || postazione.getPrenotazione().isEmpty())
 				&& (utente.getPrenotazione() == null || utente.getPrenotazione().isEmpty())) {
 			Prenotazione prenotazione = new Prenotazione(giornoPrenotazione, postazione, utente);
+			postazione.getPrenotazione().add(prenotazione);
+			utente.getPrenotazione().add(prenotazione);
 			prr.save(prenotazione);
+			pr.save(postazione);
+			ur.save(utente);
 			return prenotazione;
 		}
 
 		if (postazioneDisponibile(giornoPrenotazione, postazione) && utenteDisponibile(giornoPrenotazione, utente)) {
 			Prenotazione prenotazione = new Prenotazione(giornoPrenotazione, postazione, utente);
+			postazione.getPrenotazione().add(prenotazione);
+			utente.getPrenotazione().add(prenotazione);
 			prr.save(prenotazione);
+			pr.save(postazione);
+			ur.save(utente);
 			return prenotazione;
 		} else {
 			return null;
