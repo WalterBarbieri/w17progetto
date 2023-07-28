@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import w17progetto.dao.DaoService;
 import w17progetto.entities.Edificio;
 import w17progetto.entities.Postazione;
-import w17progetto.entities.TipoPostazione;
 import w17progetto.entities.Utente;
 
 @Component
@@ -46,6 +45,7 @@ public class GestionePrenotazioneRunner implements CommandLineRunner {
 			Postazione postazione = (Postazione) ctx.getBean("rndPostazione", edificio);
 			log.info(postazione.toString());
 			ds.save(postazione);
+			// AGGIORNO EDIFICIO CON IL SUO VALORE DI POSTAZIONE
 			ds.save(edificio);
 		}
 
@@ -67,8 +67,6 @@ public class GestionePrenotazioneRunner implements CommandLineRunner {
 		for (int i = 0; i < 100; i++) {
 			ds.searchRandomized();
 		}
-		// RICERCA MANUALE POSTAZIONE TRAMITE TIPO POSTAZIONE E CITTA'
-		ds.searchPostazioneAndCitta(TipoPostazione.OPENSPACE, "Lubowitzstad").forEach(el -> log.info(el.toString()));
 
 	}
 

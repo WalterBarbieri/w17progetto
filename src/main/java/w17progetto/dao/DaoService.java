@@ -91,7 +91,7 @@ public class DaoService implements IDao {
 	}
 
 	// METODI PER CONTROLLO E CREAZIONE PRENOTAZIONE
-
+	// METODO MANUALE
 	public Prenotazione prenotazione(LocalDate giornoPrenotazione, Postazione postazione, Utente utente) {
 		if ((postazione.getPrenotazione() == null || postazione.getPrenotazione().isEmpty())
 				&& (utente.getPrenotazione() == null || utente.getPrenotazione().isEmpty())) {
@@ -117,6 +117,7 @@ public class DaoService implements IDao {
 		return prr.findByGiornoPrenotazioneAndUtente(giornoPrenotazione, utente) == null;
 	}
 
+	// METODO RANDOM
 	public void rndPrenotazione(LocalDate giornoPrenotazione) {
 		Utente rndUtente = rndUtente();
 		Postazione rndPostazione = rndPostazione();
@@ -131,11 +132,12 @@ public class DaoService implements IDao {
 	}
 
 	// METODO PER RICERCA BY TIPO POSTAZIONE E CITTA'
-
+	// METODO MANUALE
 	public List<Postazione> searchPostazioneAndCitta(TipoPostazione tipoPostazione, String citta) {
 		return pr.findAllByTipoPostazioneAndEdificio_Citta(tipoPostazione, citta);
 	}
 
+	// METODO RANDOM
 	public void searchRandomized() {
 		TipoPostazione rndTipoPostazione = TipoPostazione.values()[rnd.nextInt(TipoPostazione.values().length)];
 		String rndCitta = rndCitta();
