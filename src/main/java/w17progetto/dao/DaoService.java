@@ -91,7 +91,28 @@ public class DaoService implements IDao {
 	}
 
 	// METODI PER CONTROLLO E CREAZIONE PRENOTAZIONE
-	// METODO MANUALE
+
+	// METODI DI CONTROLLO
+
+	// ******PRIMA ITERAZIONE: QUESTI DUE METODI DI CONTROLLO USATI ASSIEME PER
+	// DETERMINARE
+	// SE L'UTENTE E LA POSTAZIONE FOSSERO LIBERI ****
+//	public boolean postazioneDisponibile(LocalDate giornoPrenotazione, Postazione postazione) {
+//		return prr.findByGiornoPrenotazioneAndPostazione(giornoPrenotazione, postazione) == null;
+//	}
+//
+//	public boolean utenteDisponibile(LocalDate giornoPrenotazione, Utente utente) {
+//		return prr.findByGiornoPrenotazioneAndUtente(giornoPrenotazione, utente) == null;
+//	}
+	// *****SOSTITUITO DA QUESTO MA PERMANE PROBLEMA, PERO' FUNZIONA UGUALE ED E'
+	// PIU' SINTETICO
+
+	public boolean utenteEPostazioneDisponibile(LocalDate giornoPrenotazione, Postazione postazione, Utente utente) {
+		return prr.findByGiornoPrenotazioneAndPostazioneAndUtente(giornoPrenotazione, postazione, utente) == null;
+	}
+
+	// METODO MANUALE **AGGIUNTO UPDATE DI POSTAZIONE E UTENTE ALLA CREAZIONE DI
+	// PRENOTAZIONE, MA PERMANE IL PROBLEMA
 	public Prenotazione prenotazione(LocalDate giornoPrenotazione, Postazione postazione, Utente utente) {
 		if ((postazione.getPrenotazione() == null || postazione.getPrenotazione().isEmpty())
 				&& (utente.getPrenotazione() == null || utente.getPrenotazione().isEmpty())) {
@@ -103,8 +124,10 @@ public class DaoService implements IDao {
 			ur.save(utente);
 			return prenotazione;
 		}
-
-		if (postazioneDisponibile(giornoPrenotazione, postazione) && utenteDisponibile(giornoPrenotazione, utente)) {
+		// ****** QUA ERANO RICHIAMATI I DUE METODI IN QUESTO MODO:
+		// if(postazioneDisponibile(giornoPrenotazione, postazione) &&
+		// utenteDisponibile(giornoPrenotazione, utente)) {} ****
+		if (utenteEPostazioneDisponibile(giornoPrenotazione, postazione, utente)) {
 			Prenotazione prenotazione = new Prenotazione(giornoPrenotazione, postazione, utente);
 			postazione.getPrenotazione().add(prenotazione);
 			utente.getPrenotazione().add(prenotazione);
@@ -115,14 +138,6 @@ public class DaoService implements IDao {
 		} else {
 			return null;
 		}
-	}
-
-	public boolean postazioneDisponibile(LocalDate giornoPrenotazione, Postazione postazione) {
-		return prr.findByGiornoPrenotazioneAndPostazione(giornoPrenotazione, postazione) == null;
-	}
-
-	public boolean utenteDisponibile(LocalDate giornoPrenotazione, Utente utente) {
-		return prr.findByGiornoPrenotazioneAndUtente(giornoPrenotazione, utente) == null;
 	}
 
 	// METODO RANDOM
