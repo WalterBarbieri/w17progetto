@@ -6,6 +6,7 @@ import java.util.UUID;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,7 +32,7 @@ public class Postazione {
 	private int numeroMassimo;
 	@OneToOne(mappedBy = "postazione")
 	private Edificio edificio;
-	@OneToMany(mappedBy = "postazione")
+	@OneToMany(mappedBy = "postazione", fetch = FetchType.EAGER)
 	private List<Prenotazione> prenotazione;
 
 	public Postazione(String descrizione, TipoPostazione tipoPostazione, int numeroMassimo, Edificio edificio) {

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,7 +27,7 @@ public class Utente {
 	private String userName;
 	private String nomeCompleto;
 	private String email;
-	@OneToMany(mappedBy = "utente")
+	@OneToMany(mappedBy = "utente", fetch = FetchType.EAGER)
 	private List<Prenotazione> prenotazione;
 
 	public Utente(String userName, String nomeCompleto, String email) {

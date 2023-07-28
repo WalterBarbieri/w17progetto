@@ -46,11 +46,14 @@ public class GestionePrenotazioneRunner implements CommandLineRunner {
 //			log.info(utente.toString());
 //			ds.save(utente);
 //		}
-
+//
 		// ISTANZIO E SALVO RANDOM PRENOTAZIONI
-		for (int i = 0; i < 200; i++) {
+		for (int i = 0; i < 40; i++) {
 			ds.rndPrenotazione(LocalDate.now());
 		}
+
+		log.info(ds.rndUtente().toString());
+		log.info(ds.rndPostazione().toString());
 	}
 
 }

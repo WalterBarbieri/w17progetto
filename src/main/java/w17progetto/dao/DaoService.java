@@ -82,19 +82,25 @@ public class DaoService implements IDao {
 	}
 
 	// METODI PER CONTROLLO E CREAZIONE PRENOTAZIONE
-	public boolean postazioneDisponibile(LocalDate giornoPrenotazione, Postazione postazione) {
-		return prr.findByGiornoPrenotazioneAndPostazione(giornoPrenotazione, postazione) == null;
-	}
 
 	public Prenotazione prenotazione(LocalDate giornoPrenotazione, Postazione postazione, Utente utente) {
-		if (postazioneDisponibile(giornoPrenotazione, postazione)) {
+		if ((postazione.getPrenotazione() == null || postazione.getPrenotazione().isEmpty())
+				&& (utente.getPrenotazione() == null || utente.getPrenotazione().isEmpty())) {
+			Prenotazione prenotazione = new Prenotazione(giornoPrenotazione, postazione, utente);
+			prr.save(prenotazione);
+			return prenotazione;
+		} else if (postazioneDisponibile(giornoPrenotazione, postazione)
+				&& utenteDisponibile(giornoPrenotazione, utente)) {
 			Prenotazione prenotazione = new Prenotazione(giornoPrenotazione, postazione, utente);
 			prr.save(prenotazione);
 			return prenotazione;
 		} else {
 			return null;
 		}
+	}
 
+	public boolean postazioneDisponibile(LocalDate giornoPrenotazione, Postazione postazione) {
+		return prr.findByGiornoPrenotazioneAndPostazione(giornoPrenotazione, postazione) == null;
 	}
 
 	public boolean utenteDisponibile(LocalDate giornoPrenotazione, Utente utente) {
@@ -105,14 +111,11 @@ public class DaoService implements IDao {
 		Utente rndUtente = rndUtente();
 		Postazione rndPostazione = rndPostazione();
 
-		if (!utenteDisponibile(giornoPrenotazione, rndUtente)) {
-			if (postazioneDisponibile(giornoPrenotazione, rndPostazione)) {
-				prenotazione(giornoPrenotazione, rndPostazione, rndUtente);
-			} else {
-				log.info("Prenotazione non riuscita: postazione già prenotata per la data prescelta");
-			}
-		} else {
-			log.info("Prenotazione non riuscita: l'utente ha già una prentoazione per la data prescelta");
+		try {
+			Prenotazione prenotazione = prenotazione(giornoPrenotazione, rndPostazione, rndUtente);
+			log.info("Prenotazione " + prenotazione.getId() + " inserita correttamente");
+		} catch (NullPointerException e) {
+			log.info("Prenotazione non riuscita");
 		}
 
 	}
