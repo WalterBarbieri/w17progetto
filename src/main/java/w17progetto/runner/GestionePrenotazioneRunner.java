@@ -1,6 +1,7 @@
 package w17progetto.runner;
 
 import java.time.LocalDate;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -22,6 +23,8 @@ public class GestionePrenotazioneRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
+		Random rnd = new Random();
 
 //		// ISTANZIO E SALVO RANDOM EDIFICI
 //		List<Edificio> edifici = new ArrayList<>();
@@ -46,14 +49,13 @@ public class GestionePrenotazioneRunner implements CommandLineRunner {
 //			log.info(utente.toString());
 //			ds.save(utente);
 //		}
-//
+
 		// ISTANZIO E SALVO RANDOM PRENOTAZIONI
-		for (int i = 0; i < 40; i++) {
-			ds.rndPrenotazione(LocalDate.now());
+		for (int i = 0; i < 200; i++) {
+			int rndInt = rnd.nextInt(7) + 1;
+			ds.rndPrenotazione(LocalDate.now().plusDays(rndInt));
 		}
 
-		log.info(ds.rndUtente().toString());
-		log.info(ds.rndPostazione().toString());
 	}
 
 }

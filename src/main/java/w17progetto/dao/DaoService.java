@@ -89,8 +89,9 @@ public class DaoService implements IDao {
 			Prenotazione prenotazione = new Prenotazione(giornoPrenotazione, postazione, utente);
 			prr.save(prenotazione);
 			return prenotazione;
-		} else if (postazioneDisponibile(giornoPrenotazione, postazione)
-				&& utenteDisponibile(giornoPrenotazione, utente)) {
+		}
+
+		if (postazioneDisponibile(giornoPrenotazione, postazione) && utenteDisponibile(giornoPrenotazione, utente)) {
 			Prenotazione prenotazione = new Prenotazione(giornoPrenotazione, postazione, utente);
 			prr.save(prenotazione);
 			return prenotazione;
@@ -114,9 +115,15 @@ public class DaoService implements IDao {
 		try {
 			Prenotazione prenotazione = prenotazione(giornoPrenotazione, rndPostazione, rndUtente);
 			log.info("Prenotazione " + prenotazione.getId() + " inserita correttamente");
-		} catch (NullPointerException e) {
+		} catch (Exception e) {
 			log.info("Prenotazione non riuscita");
 		}
 
 	}
+
+//	// METODO PER RICERCA BY TIPO POSTAZIONE E CITTA'
+//
+//	public List<Postazione> searchPostazioneAndCitta(TipoPostazione tipoPostazione, String citta) {
+//		return pr.findAllByTipoPostazioneAndCittaAndPrenotazioneIsNull(tipoPostazione, citta);
+//	}
 }
