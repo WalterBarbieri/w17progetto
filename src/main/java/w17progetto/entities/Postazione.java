@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +26,7 @@ public class Postazione {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 	private String descrizione;
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private TipoPostazione tipoPostazione;
 	private int numeroMassimo;
 	@OneToOne(mappedBy = "postazione")

@@ -1,5 +1,6 @@
 package w17progetto.dao.repositories;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,5 +10,5 @@ import w17progetto.entities.Postazione;
 
 @Repository
 public interface PostazioneRepository extends JpaRepository<Postazione, UUID> {
-
+	List<Postazione> findAll();
 }
