@@ -37,4 +37,11 @@ public class Prenotazione {
 		this.setUtente(utente);
 	}
 
+	@Override
+	public String toString() {
+		return "Prenotazione [Id: " + id + ", Data Prenotazione: " + giornoPrenotazione + ", Postazione"
+				+ postazione.getTipoPostazione() + " in " + postazione.getEdificio().getCitta() + ", Utente: "
+				+ utente.getNomeCompleto() + "]";
+	}
+
 }

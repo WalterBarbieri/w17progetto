@@ -15,6 +15,7 @@ import w17progetto.dao.repositories.UtenteRepository;
 import w17progetto.entities.Edificio;
 import w17progetto.entities.Postazione;
 import w17progetto.entities.Prenotazione;
+import w17progetto.entities.TipoPostazione;
 import w17progetto.entities.Utente;
 
 @Service
@@ -81,6 +82,14 @@ public class DaoService implements IDao {
 		return postazioni.get(rnd.nextInt(postazioni.size()));
 	}
 
+	public String rndCitta() {
+		List<Edificio> edifici = er.findAll();
+		if (edifici.isEmpty()) {
+			return null;
+		}
+		return edifici.get(rnd.nextInt(edifici.size())).getCitta();
+	}
+
 	// METODI PER CONTROLLO E CREAZIONE PRENOTAZIONE
 
 	public Prenotazione prenotazione(LocalDate giornoPrenotazione, Postazione postazione, Utente utente) {
@@ -121,9 +130,27 @@ public class DaoService implements IDao {
 
 	}
 
-//	// METODO PER RICERCA BY TIPO POSTAZIONE E CITTA'
-//
-//	public List<Postazione> searchPostazioneAndCitta(TipoPostazione tipoPostazione, String citta) {
-//		return pr.findAllByTipoPostazioneAndCittaAndPrenotazioneIsNull(tipoPostazione, citta);
-//	}
+	// METODO PER RICERCA BY TIPO POSTAZIONE E CITTA'
+
+	public List<Postazione> searchPostazioneAndCitta(TipoPostazione tipoPostazione, String citta) {
+		return pr.findAllByTipoPostazioneAndEdificio_Citta(tipoPostazione, citta);
+	}
+
+	public void searchRandomized() {
+		TipoPostazione rndTipoPostazione = TipoPostazione.values()[rnd.nextInt(TipoPostazione.values().length)];
+		String rndCitta = rndCitta();
+		try {
+			List<Postazione> trovati = searchPostazioneAndCitta(rndTipoPostazione, rndCitta);
+			if (trovati.isEmpty()) {
+				log.info("Nessun elemento corrisponde alla ricerca effettuata per " + rndTipoPostazione + " e "
+						+ rndCitta);
+			} else {
+				log.info("Risultati trovati per " + rndTipoPostazione + " e " + rndCitta);
+				log.info(trovati.toString());
+			}
+
+		} catch (Exception e) {
+			log.info("Errore nella ricerca");
+		}
+	}
 }
