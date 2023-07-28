@@ -68,6 +68,25 @@ public class GestionePrenotazioneRunner implements CommandLineRunner {
 			ds.searchRandomized();
 		}
 
+		// METODO PER INSERIMENTO MANUALE PRENTOAZIONE, NON RISOLVE IL PROBLEMA DELLE 20
+		// PRENOTAZIONI
+//		Utente rndUtente = ds.rndUtente();
+//		log.error(rndUtente.toString());
+//		log.info(rndUtente.getPrenotazione().toString());
+//
+//		Postazione rndPostazione = ds.rndPostazione();
+//		log.info(rndPostazione.toString());
+//		log.info(rndPostazione.getPrenotazione().toString());
+//
+//		try {
+//			Prenotazione funzionaTiPregoPrentoazione = ds.prenotazione(LocalDate.of(2022, 6, 15), rndPostazione,
+//					rndUtente);
+//			log.info(funzionaTiPregoPrentoazione.toString());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			log.info("Non ci si può fare");
+//		}
+
 	}
 
 }

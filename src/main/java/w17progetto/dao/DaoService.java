@@ -104,8 +104,8 @@ public class DaoService implements IDao {
 //	public boolean utenteDisponibile(LocalDate giornoPrenotazione, Utente utente) {
 //		return prr.findByGiornoPrenotazioneAndUtente(giornoPrenotazione, utente) == null;
 //	}
-	// *****SOSTITUITO DA QUESTO MA PERMANE PROBLEMA, PERO' FUNZIONA UGUALE ED E'
-	// PIU' SINTETICO
+	// *****SOSTITUITO DA QUESTO MA PERMANE PROBLEMA, HA STESSO EFFETTO MA PIU'
+	// SINTETICO
 
 	public boolean utenteEPostazioneDisponibile(LocalDate giornoPrenotazione, Postazione postazione, Utente utente) {
 		return prr.findByGiornoPrenotazioneAndPostazioneAndUtente(giornoPrenotazione, postazione, utente) == null;
