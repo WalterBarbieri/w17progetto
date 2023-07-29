@@ -114,8 +114,9 @@ public class DaoService implements IDao {
 	// METODO MANUALE **AGGIUNTO UPDATE DI POSTAZIONE E UTENTE ALLA CREAZIONE DI
 	// PRENOTAZIONE, MA PERMANE IL PROBLEMA
 	public Prenotazione prenotazione(LocalDate giornoPrenotazione, Postazione postazione, Utente utente) {
-		if ((postazione.getPrenotazione() == null || postazione.getPrenotazione().isEmpty())
-				&& (utente.getPrenotazione() == null || utente.getPrenotazione().isEmpty())) {
+		// PRIMO CONTROLLO PER INTERCETTARE LE LISTE VUOTE, FUNZIONA SOLO PER LA PRIMA
+		// ISTANZA
+		if ((postazione.getPrenotazione().isEmpty()) && (utente.getPrenotazione().isEmpty())) {
 			Prenotazione prenotazione = new Prenotazione(giornoPrenotazione, postazione, utente);
 			postazione.getPrenotazione().add(prenotazione);
 			utente.getPrenotazione().add(prenotazione);
@@ -124,6 +125,7 @@ public class DaoService implements IDao {
 			ur.save(utente);
 			return prenotazione;
 		}
+		// VERO CONTROLLO
 		// ****** QUA ERANO RICHIAMATI I DUE METODI IN QUESTO MODO:
 		// if(postazioneDisponibile(giornoPrenotazione, postazione) &&
 		// utenteDisponibile(giornoPrenotazione, utente)) {} ****
