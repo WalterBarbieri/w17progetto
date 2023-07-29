@@ -17,7 +17,4 @@ public interface PrenotazioneRepository extends JpaRepository<Prenotazione, UUID
 
 	Optional<Prenotazione> findByGiornoPrenotazioneAndUtente(LocalDate giornoPrenotazione, Utente utente);
 
-	Optional<Prenotazione> findByGiornoPrenotazioneAndPostazioneAndUtente(LocalDate giornoPrenotazione,
-			Postazione postazione, Utente utente);
-
 }
